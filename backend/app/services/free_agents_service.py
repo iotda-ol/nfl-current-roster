@@ -104,7 +104,9 @@ def sync_free_agents(db: Session, season: int = CURRENT_SEASON) -> int:
         logger.error("Failed to import rosters for FA sync: %s", exc)
         raise
 
-    # Filter to free agents: explicit FA status codes or missing team assignment
+    # Filter to free agents: explicit FA status codes or missing team assignment.
+    # Status codes: FA = Free Agent, RFA = Restricted FA, UFA = Unrestricted FA,
+    # EXE = Commissioner's Exempt List (player is not on a team's active roster).
     fa_df = df[
         df["status"].isin(["FA", "RFA", "UFA", "EXE"])
         | df["team"].isna()

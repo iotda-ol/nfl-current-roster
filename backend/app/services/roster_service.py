@@ -14,12 +14,13 @@ from app.schemas.player import PlayerRead
 
 logger = logging.getLogger(__name__)
 
-# The most recently completed NFL season.  The season year is the calendar
-# year in which the season *started* (e.g., the 2024-25 season = 2024).
-# After the Super Bowl in February the season year increments.
+
 def _current_season() -> int:
     today = datetime.date.today()
-    # Regular season starts in September; Super Bowl is in February.
+    # The season year equals the calendar year in which that season *started*
+    # (e.g., the 2025-26 season → 2025).  Seasons kick off in September and
+    # end with the Super Bowl in February, so from January through August we
+    # are still within the season that started the previous year.
     return today.year - 1 if today.month < 9 else today.year
 
 
