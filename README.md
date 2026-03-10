@@ -139,6 +139,8 @@ npm install
 
 # Copy and configure environment
 cp .env.local.example .env.local
+# The default uses Next.js API rewrites to proxy requests to the backend.
+# For direct-access dev (without rewrites), set:
 # NEXT_PUBLIC_API_URL=http://localhost:8000
 
 # Start dev server
@@ -168,9 +170,9 @@ python sync_db.py --draft
 | Resource | Source |
 |----------|--------|
 | Teams | `nfl_data_py.import_team_desc()` |
-| Rosters | `nfl_data_py.import_rosters()` |
-| Free Agents | `nfl_data_py` roster data (status=FA) + web scraping (Spotrac) |
-| Draft Prospects | Web scraping (The Draft Network) + curated seed data |
+| Rosters | `nfl_data_py.import_rosters()` with `position_group` derivation |
+| Free Agents | `nfl_data_py` (status: FA/RFA/UFA/EXE) with age calculation + Spotrac contract data |
+| Draft Prospects | Web scraping (The Draft Network) with curated 2026 Round 1 seed data |
 
 ---
 
@@ -181,8 +183,9 @@ python sync_db.py --draft
 | `GET` | `/api/teams/` | List all NFL teams |
 | `GET` | `/api/teams/{abbr}` | Get team by abbreviation |
 | `POST` | `/api/teams/sync` | Sync team data |
-| `GET` | `/api/rosters/{team_abbr}` | Get team roster (optional `?season=2024`) |
+| `GET` | `/api/rosters/{team_abbr}` | Get team roster (optional `?season=2025`) |
 | `GET` | `/api/rosters/player/{player_id}` | Get player details |
+| `GET` | `/api/rosters/search?q=<name>` | Search players by name across all teams |
 | `POST` | `/api/rosters/sync` | Sync roster data |
 | `GET` | `/api/free-agents/` | List free agents (optional `?position=QB&search=brady`) |
 | `POST` | `/api/free-agents/sync` | Sync free agent data |

@@ -5,6 +5,7 @@ import {
   fetchDraftProspects,
   fetchFreeAgents,
   fetchPlayer,
+  fetchPlayerSearch,
   fetchRoster,
   fetchTeam,
   fetchTeams,
@@ -47,6 +48,15 @@ export function usePlayer(playerId: string) {
     queryKey: ["players", playerId],
     queryFn: () => fetchPlayer(playerId),
     enabled: Boolean(playerId),
+  });
+}
+
+export function usePlayerSearch(query: string) {
+  return useQuery({
+    queryKey: ["player-search", query],
+    queryFn: () => fetchPlayerSearch(query),
+    enabled: query.length >= 2,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }
 

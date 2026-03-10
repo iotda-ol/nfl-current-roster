@@ -6,7 +6,6 @@ from __future__ import annotations
 import logging
 from typing import List, Optional
 
-import nfl_data_py as nfl
 from sqlalchemy.orm import Session
 
 from app.models.team import Team
@@ -41,6 +40,8 @@ def sync_teams(db: Session) -> int:
 
     Returns the number of records upserted.
     """
+    import nfl_data_py as nfl  # lazy import – only needed during sync
+
     try:
         df = nfl.import_team_desc()
     except Exception as exc:

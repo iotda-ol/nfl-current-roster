@@ -2,8 +2,8 @@
 Draft service – scrapes 2026 NFL Draft order and prospect data.
 
 Primary sources (attempted in order):
-1. nfl_data_py draft picks (historical, for structure reference)
-2. BeautifulSoup scrape of The Draft Network / tankathon for 2026 prospects
+1. BeautifulSoup scrape of The Draft Network for 2026 prospects
+2. Curated seed data for round 1 picks (always accurate fallback)
 """
 from __future__ import annotations
 

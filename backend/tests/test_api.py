@@ -187,6 +187,27 @@ def test_get_player_found(client, db):
     assert resp.json()["full_name"] == "Tom Brady"
 
 
+def test_search_players_found(client, db):
+    _seed_player(db)
+    resp = client.get("/api/rosters/search?q=Tom")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert len(data) == 1
+    assert data[0]["full_name"] == "Tom Brady"
+
+
+def test_search_players_no_results(client, db):
+    _seed_player(db)
+    resp = client.get("/api/rosters/search?q=nobody")
+    assert resp.status_code == 200
+    assert resp.json() == []
+
+
+def test_search_players_query_too_short(client):
+    resp = client.get("/api/rosters/search?q=T")
+    assert resp.status_code == 422
+
+
 # ---------------------------------------------------------------------------
 # Free agents endpoints
 # ---------------------------------------------------------------------------
@@ -290,6 +311,17 @@ def test_free_agent_schema():
     from app.schemas.free_agent import FreeAgentRead
     fa = FreeAgentRead(id=1, player_id="fa1", full_name="Test FA", position="WR")
     assert fa.position == "WR"
+
+
+def test_free_agent_age_field(db):
+    """Free agents with a birth_date should have age populated after sync."""
+    from app.services.free_agents_service import _calc_age
+    import datetime
+    today = datetime.date.today()
+    birth = today.replace(year=today.year - 30)
+    assert _calc_age(birth.isoformat()) == 30
+    assert _calc_age(None) is None
+    assert _calc_age("invalid-date") is None
 
 
 def test_draft_prospect_schema():
