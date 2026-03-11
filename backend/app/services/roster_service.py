@@ -34,10 +34,10 @@ def _safe_int(val) -> Optional[int]:
 def sync_rosters(db: Session, season: int = CURRENT_SEASON) -> int:
     """Pull roster data for the given season and upsert into the DB."""
     try:
-        df = nfl.import_rosters([season], columns=[
-            "player_id", "player_name", "position", "team", "jersey_number",
+        df = nfl.import_seasonal_rosters([season], columns=[
+            "season", "player_id", "player_name", "position", "team", "jersey_number",
             "status", "years_exp", "college", "height", "weight", "birth_date",
-            "headshot_url", "depth_chart_position", "depth_chart_order",
+            "headshot_url", "depth_chart_position",
             "first_name", "last_name",
         ])
     except Exception as exc:
@@ -69,7 +69,7 @@ def sync_rosters(db: Session, season: int = CURRENT_SEASON) -> int:
         record.birth_date = _safe_str(row.get("birth_date"))
         record.headshot_url = _safe_str(row.get("headshot_url"))
         record.depth_chart_position = _safe_str(row.get("depth_chart_position"))
-        record.depth_chart_order = _safe_int(row.get("depth_chart_order"))
+        record.depth_chart_order = None
         record.season = season
         count += 1
 

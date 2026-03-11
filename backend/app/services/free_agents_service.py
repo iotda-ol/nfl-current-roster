@@ -67,8 +67,8 @@ def _scrape_fa_contract_data() -> dict:
 def sync_free_agents(db: Session, season: int = CURRENT_SEASON) -> int:
     """Pull free agents from nfl_data_py (status == 'FA') and upsert into the DB."""
     try:
-        df = nfl.import_rosters([season], columns=[
-            "player_id", "player_name", "position", "team", "status",
+        df = nfl.import_seasonal_rosters([season], columns=[
+            "season", "player_id", "player_name", "position", "team", "status",
             "years_exp", "college", "height", "weight", "birth_date",
             "headshot_url", "first_name", "last_name",
         ])
