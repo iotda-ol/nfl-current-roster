@@ -97,12 +97,12 @@ export default function TeamRosterPage() {
                 <table className="min-w-full divide-y divide-gray-100">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">#</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Ht</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Wt</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Exp</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">College</th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">#</th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Ht</th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Wt</th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Exp</th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">College</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
@@ -117,14 +117,14 @@ export default function TeamRosterPage() {
                               // eslint-disable-next-line @next/next/no-img-element
                               <img
                                 src={player.headshot_url}
-                                alt={player.full_name ?? ""}
+                                alt=""
                                 className="w-8 h-8 rounded-full object-cover bg-gray-200"
                                 onError={(e) => {
                                   (e.target as HTMLImageElement).style.display = "none";
                                 }}
                               />
                             ) : (
-                              <div className="w-8 h-8 rounded-full bg-gray-200" />
+                              <div className="w-8 h-8 rounded-full bg-gray-200" aria-hidden="true" />
                             )}
                             {player.full_name ?? "Unknown"}
                           </div>

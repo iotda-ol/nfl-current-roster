@@ -8,7 +8,7 @@ A full-stack application for exploring real-time NFL roster data, current free a
 |-------|-----------|
 | **Backend** | Python 3.12+, FastAPI, SQLAlchemy 2, PostgreSQL, Alembic |
 | **Data Ingestion** | nfl_data_py, BeautifulSoup4 |
-| **Frontend** | Next.js 14, TypeScript, Tailwind CSS, Shadcn/UI |
+| **Frontend** | Next.js 15, TypeScript, Tailwind CSS, Shadcn/UI |
 | **Data Fetching** | TanStack Query (React Query) |
 | **Infrastructure** | Docker, Docker Compose |
 
@@ -55,7 +55,7 @@ nfl-current-roster/
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── layout.tsx       # Root layout with sidebar
-│   │   │   ├── page.tsx         # Home / dashboard overview
+│   │   │   ├── page.tsx         # Home / dashboard overview with live stats
 │   │   │   ├── teams/[abbr]/    # Team roster page
 │   │   │   ├── free-agents/     # Free agency table
 │   │   │   └── draft-room/      # 2026 Draft Room
@@ -129,6 +129,14 @@ cp .env.example .env
 uvicorn app.main:app --reload
 ```
 
+#### Backend Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DATABASE_URL` | `postgresql://nfl_user:nfl_password@db:5432/nfl_dashboard` | PostgreSQL connection string |
+| `SECRET_KEY` | `change_me_in_production` | Secret key — **change in production** |
+| `DEBUG` | `true` | Enable debug mode |
+
 ### Frontend
 
 ```bash
@@ -146,6 +154,12 @@ cp .env.local.example .env.local
 # Start dev server
 npm run dev
 ```
+
+#### Frontend Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `NEXT_PUBLIC_API_URL` | _(empty — uses Next.js rewrites)_ | Override to talk directly to the backend, e.g. `http://localhost:8000` |
 
 ---
 
@@ -216,7 +230,21 @@ The TypeScript types in `frontend/src/types/index.ts` mirror the Pydantic models
 
 | Page | Path | Description |
 |------|------|-------------|
-| Dashboard | `/` | Overview with navigation cards |
-| Team Roster | `/teams/[abbr]` | Roster grouped by position |
-| Free Agents | `/free-agents` | Searchable table with position filter |
-| Draft Room | `/draft-room` | 2026 draft order with grades and filters |
+| Dashboard | `/` | Overview with live stats counters and navigation cards |
+| Team Roster | `/teams/[abbr]` | Roster grouped by position with headshots |
+| Free Agents | `/free-agents` | Searchable table with position filter, age, and contract data |
+| Draft Room | `/draft-room` | 2026 draft order with collegiate grades and position filters |
+
+---
+
+## Contributing
+
+1. Fork the repository and create a feature branch: `git checkout -b feat/my-feature`
+2. Make your changes, ensuring all linting and tests pass:
+   ```bash
+   # Backend
+   cd backend && python -m pytest tests/ -v
+   # Frontend
+   cd frontend && npm run lint && npx tsc --noEmit
+   ```
+3. Open a pull request with a clear description of the changes.

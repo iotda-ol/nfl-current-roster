@@ -94,25 +94,28 @@ export default function FreeAgentsPage() {
               <table className="min-w-full divide-y divide-gray-100">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Player
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Position
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Last Team
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Age
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Ht / Wt
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Exp
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       College
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Contract Value
                     </th>
                   </tr>
@@ -126,14 +129,14 @@ export default function FreeAgentsPage() {
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
                               src={agent.headshot_url}
-                              alt={agent.full_name ?? ""}
+                              alt=""
                               className="w-9 h-9 rounded-full object-cover bg-gray-200"
                               onError={(e) => {
                                 (e.target as HTMLImageElement).style.display = "none";
                               }}
                             />
                           ) : (
-                            <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500 font-bold">
+                            <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500 font-bold" aria-hidden="true">
                               {(agent.full_name ?? "?")[0]}
                             </div>
                           )}
@@ -148,6 +151,9 @@ export default function FreeAgentsPage() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-500">{agent.last_team ?? "—"}</td>
+                      <td className="px-4 py-3 text-sm text-gray-500">
+                        {agent.age != null ? agent.age : "—"}
+                      </td>
                       <td className="px-4 py-3 text-sm text-gray-500">
                         {agent.height ?? "—"} / {agent.weight ? `${agent.weight} lbs` : "—"}
                       </td>

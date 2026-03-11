@@ -11,10 +11,12 @@ import {
   ChevronDown,
   ChevronRight,
   Loader2,
+  Home,
 } from "lucide-react";
 import { useState } from "react";
 
 const NAV_ITEMS = [
+  { label: "Home", href: "/", icon: Home },
   { label: "Free Agency", href: "/free-agents", icon: UserCheck },
   { label: "Draft Room 2026", href: "/draft-room", icon: Trophy },
 ];
@@ -56,6 +58,7 @@ export function Sidebar() {
           <Link
             key={href}
             href={href}
+            aria-current={pathname === href ? "page" : undefined}
             className={cn(
               "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
               pathname === href
@@ -63,7 +66,7 @@ export function Sidebar() {
                 : "text-gray-300 hover:bg-gray-800 hover:text-white"
             )}
           >
-            <Icon className="w-4 h-4 shrink-0" />
+            <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
             {label}
           </Link>
         ))}
@@ -72,25 +75,27 @@ export function Sidebar() {
         <div className="mt-4">
           <button
             onClick={() => setTeamsOpen((o) => !o)}
+            aria-expanded={teamsOpen}
+            aria-controls="teams-nav"
             className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
           >
             <span className="flex items-center gap-2">
-              <Users className="w-4 h-4" />
+              <Users className="w-4 h-4" aria-hidden="true" />
               Teams
             </span>
             {teamsOpen ? (
-              <ChevronDown className="w-4 h-4" />
+              <ChevronDown className="w-4 h-4" aria-hidden="true" />
             ) : (
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4" aria-hidden="true" />
             )}
           </button>
 
           {teamsOpen && (
-            <div className="mt-1 ml-2 space-y-3">
+            <div id="teams-nav" className="mt-1 ml-2 space-y-3">
               {isLoading && (
                 <div className="flex items-center gap-2 px-3 py-2 text-gray-500 text-sm">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Loading teams…
+                  <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                  <span>Loading teams…</span>
                 </div>
               )}
               {groupedTeams.map(({ label, teams: divTeams }) => (
@@ -102,6 +107,7 @@ export function Sidebar() {
                     <Link
                       key={team.team_abbr}
                       href={`/teams/${team.team_abbr}`}
+                      aria-current={pathname === `/teams/${team.team_abbr}` ? "page" : undefined}
                       className={cn(
                         "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors",
                         pathname === `/teams/${team.team_abbr}`
@@ -113,11 +119,11 @@ export function Sidebar() {
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={team.team_logo_espn}
-                          alt={team.team_abbr}
+                          alt=""
                           className="w-5 h-5 object-contain"
                         />
                       ) : (
-                        <span className="w-5 h-5 flex items-center justify-center text-xs font-bold bg-gray-700 rounded-sm">
+                        <span className="w-5 h-5 flex items-center justify-center text-xs font-bold bg-gray-700 rounded-sm" aria-hidden="true">
                           {team.team_abbr.slice(0, 2)}
                         </span>
                       )}
