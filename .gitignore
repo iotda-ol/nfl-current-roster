@@ -10,10 +10,10 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
-# Allow frontend/src/lib (TypeScript utility library)
-!frontend/src/lib/
+# lib/ and lib64/ are Python build directories – exclude only top-level to
+# avoid catching frontend/src/lib which is part of the source tree.
+/lib/
+/lib64/
 parts/
 sdist/
 var/
