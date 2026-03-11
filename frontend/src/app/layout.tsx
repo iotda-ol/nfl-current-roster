@@ -16,8 +16,18 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "NFL Data Dashboard",
-  description: "Real-time NFL roster, free agent, and draft data",
+  title: {
+    default: "NFL Data Dashboard",
+    template: "%s | NFL Data Dashboard",
+  },
+  description:
+    "Explore real-time NFL roster data, current free agents, and the upcoming 2026 NFL Draft with live stats and filters.",
+  keywords: ["NFL", "football", "roster", "free agents", "draft", "2026 NFL Draft"],
+  openGraph: {
+    title: "NFL Data Dashboard",
+    description: "Real-time NFL roster data, free agency tracker, and 2026 draft room.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
