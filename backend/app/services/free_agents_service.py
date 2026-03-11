@@ -95,8 +95,8 @@ def sync_free_agents(db: Session, season: int = CURRENT_SEASON) -> int:
     import nfl_data_py as nfl  # lazy import – only needed during sync
 
     try:
-        df = nfl.import_rosters([season], columns=[
-            "player_id", "player_name", "position", "team", "status",
+        df = nfl.import_seasonal_rosters([season], columns=[
+            "season", "player_id", "player_name", "position", "team", "status",
             "years_exp", "college", "height", "weight", "birth_date",
             "headshot_url", "first_name", "last_name",
         ])
